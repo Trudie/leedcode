@@ -21,6 +21,9 @@ Input:
 00011
 
 Output: 3
+[0,0] [1,0] [0,1]
+[1,0] [0,1] [1,1]
+[0,1] [1,1]
 """
 
 
@@ -69,7 +72,7 @@ class BFS():
     def traverse(self, row, col):
         """
         queue[root, child_node, child_node,...]
-        for grid the child_node will be 4 direction
+        for grid the child_node will be 4 directions
         :param row: root_row
         :param col: root_col
         :return:
@@ -84,14 +87,14 @@ class BFS():
             if not val == '0':
                 # push the neighbor
                 for i, j in [(row + 1, col), (row, col + 1), (row - 1, col), (row, col - 1)]:
-                    if 0 <= i < self.n_row and 0 <= j < self.n_col and not self.grid[i][j] == '-1':
+                    if 0 <= i < self.n_row and 0 <= j < self.n_col and not self.grid[i][j] == '0':
                         val = self.grid[i][j]
                         if val == '1':
                             self.push([i, j])
                         else:
-                            self.grid[i][j] = '-1'
+                            self.grid[i][j] = '0'
             # pop the root and mark visited in grid
-            self.grid[row][col] = '-1'
+            self.grid[row][col] = '0'
             self.pop()
         return self.grid
 
@@ -107,9 +110,7 @@ class Solution:
         for i in range(n_row):
             for j in range(n_col):
                 val = grid[i][j]
-                if val == '0':
-                    grid[i][j] = -1
-                elif not val == '-1':
+                if not val == '0':
                     bfs = BFS(grid)
                     grid = bfs.traverse(i, j)
                     n_island += 1
