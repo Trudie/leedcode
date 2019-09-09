@@ -24,6 +24,7 @@ Output: 3
 [0,0] [1,0] [0,1]
 [1,0] [0,1] [1,1]
 [0,1] [1,1]
+
 """
 
 
@@ -89,12 +90,9 @@ class BFS():
                 for i, j in [(row + 1, col), (row, col + 1), (row - 1, col), (row, col - 1)]:
                     if 0 <= i < self.n_row and 0 <= j < self.n_col and not self.grid[i][j] == '0':
                         val = self.grid[i][j]
+                        self.grid[i][j] = '0'
                         if val == '1':
                             self.push([i, j])
-                        else:
-                            self.grid[i][j] = '0'
-            # pop the root and mark visited in grid
-            self.grid[row][col] = '0'
             self.pop()
         return self.grid
 
