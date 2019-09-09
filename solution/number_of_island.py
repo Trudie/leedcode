@@ -74,16 +74,16 @@ class BFS():
         """
         # push the root
         self.push([row, col])
+        self.grid[row][col] = '0'
         while not self.isEmpty():
-            row, col = self.peek()
-            # mark been visited in queue
-            if self.grid[row][col] == '1':
-                self.grid[row][col] = '0'
-                # push the neighbor
-                for i, j in [(row + 1, col), (row, col + 1), (row - 1, col), (row, col - 1)]:
-                    if 0 <= i < self.n_row and 0 <= j < self.n_col and self.grid[i][j] == '1':
-                        self.push([i, j])
-                self.pop()
+            row, col = self.peek()                
+            # push the neighbor
+            for i, j in [(row + 1, col), (row, col + 1), (row - 1, col), (row, col - 1)]:
+                if 0 <= i < self.n_row and 0 <= j < self.n_col and self.grid[i][j] == '1':
+                    self.grid[i][j] = '0'
+                    self.push([i, j])
+            self.pop()
+            print(self.grid, self.front, self.rear, self.queue)
 
         return self.grid
 
@@ -100,7 +100,7 @@ class Solution:
                 if grid[i][j] == '1':
                     bfs = BFS(grid)
                     grid = bfs.traverse(i, j)
-                    print('='*10)
+                    print('='*30)
                     n_island += 1
 
         return n_island
